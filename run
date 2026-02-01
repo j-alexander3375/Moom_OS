@@ -1,1 +1,29 @@
-qemu-system-i386 -fda build/main_floppy.img
+#!/bin/bash
+# Run MoomOS - Choose your emulator
+
+echo "Running MoomOS..."
+echo "Choose emulator:"
+echo "1) QEMU (recommended)"
+echo "2) Bochs"
+echo "3) QEMU with debugging"
+echo ""
+read -p "Enter choice (1-3): " choice
+
+case $choice in
+    1)
+        echo "Starting MoomOS with QEMU..."
+        qemu-system-i386 -fda build/main_floppy.img
+        ;;
+    2)
+        echo "Starting MoomOS with Bochs..."
+        bochs -f bochs_config -q
+        ;;
+    3)
+        echo "Starting MoomOS with QEMU in debug mode..."
+        qemu-system-i386 -fda build/main_floppy.img -monitor stdio -d int
+        ;;
+    *)
+        echo "Invalid choice. Using QEMU..."
+        qemu-system-i386 -fda build/main_floppy.img
+        ;;
+esac
